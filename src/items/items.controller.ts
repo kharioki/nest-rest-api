@@ -8,17 +8,21 @@ import {
   Param,
 } from '@nestjs/common';
 import { CreateItemDto } from './dto/creat-item.dto';
+import { ItemsService } from './items.service';
+import { Item } from './interfaces/item.interface';
 
 @Controller('items')
 export class ItemsController {
+  constructor(private readonly itemsService: ItemsService) {}
+
   @Get()
-  findAll(): string {
-    return 'This action returns all items';
+  findAll(): Item[] {
+    return this.itemsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): string {
-    return `#${id} item`;
+  findOne(@Param('id') id: string): Item {
+    return this.itemsService.findOne(id);
   }
 
   @Post()
